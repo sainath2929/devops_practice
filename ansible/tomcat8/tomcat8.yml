@@ -32,7 +32,12 @@
         src: templates/tomcat-users.xml.j2
         dest: etc/tomcat8/tomcat-users.xml 
       notify: 
-        - restart tomcat8  
+        - restart tomcat8
+    - name: coping game of life war file
+        get_url: https://devopsspractice.s3.amazonaws.com/gameoflife.war
+        dest: /etc/lib/tomcat8/webapps/gameoflife.war
+      notify: 
+        - restart tomcat8
   handlers:
     - name: restart tomcat8
       service: 
