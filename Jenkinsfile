@@ -7,9 +7,6 @@ node('MVN') {
 	sh 'mvn package'
     
     }
-	stage('dummy'){
-	sh 'pwd'
-	}
     
     stage('Results'){
         archive 'gameoflife-web/target/gameoflife.war'
