@@ -1,6 +1,6 @@
 node('UBUNTU') {
     stage('git') {
-        git branch:'dev' 'https://github.com/asquarezone/game-of-life.git'
+        git branch:'dev1' 'https://github.com/sainath2929/devops_practice.git'
     }
     
     stage('build') {
