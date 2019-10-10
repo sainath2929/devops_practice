@@ -1,4 +1,4 @@
-node('MVN') {
+node('UBUNTU') {
     stage('git') {
         git branch:'dev' 'https://github.com/asquarezone/game-of-life.git'
     }
