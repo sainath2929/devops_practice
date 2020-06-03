@@ -8,7 +8,7 @@
    - tomcat8-docs
    - tomcat8-admin 
    - tomcat8-examples
-  tomcat_username: admin
+  tomcat_user: admin
   tomcat_passwd: password
   tasks:
    - name: update ubuntu
@@ -37,9 +37,9 @@
      template:
       src: /templates/tomcat-users.xml.j2
       dest: /etc/tomcat8/tomcat-users.xml
-    notify:
-     - restart tomcat
-
+     notify:
+      - restart tomcat
+ 
   handlers:
     name: restart tomcat
     service:
