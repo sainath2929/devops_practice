@@ -1,0 +1,20 @@
+---
+- hosts: all 
+  become: yes
+  vars:
+    xmx_size: 256m
+    maxperm_size: 512m
+  tasks:
+   - name: update ubuntu
+     apt: 
+      update_cache: yes
+      state: latest
+
+   - name: install tomcat8
+     package:
+      name: tomcat8
+      state: present 
+
+   - name: copy file
+     template:
+      src: 
