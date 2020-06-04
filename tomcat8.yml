@@ -1,47 +1,55 @@
 ---
-- hosts: all 
+- hosts: all
   become: yes
   vars:
-    xmx_size: 512m
-    maxperm_size: 256m
-  tomcat_additional_packages:
-   - tomcat8-docs
-   - tomcat8-admin 
-   - tomcat8-examples
-  tomcat_user: admin
-  tomcat_passwd: password
+   xmx_size: 512m
+   maxperm_size: 256m
+   tomcat_additional_packages:
+    - tomcat8-docs
+    - tomcat8-admin
+    - tomcat8-examples
+   tomcat_user: admin
+   tomcat_passwd: password
+  gather_facts: true
   tasks:
    - name: update ubuntu
-     apt: 
+     apt:
       update_cache: yes
       state: latest
-
    - name: install tomcat8
      package:
       name: tomcat8
-      state: present 
+      state: present
 
    - name: copy file
      template:
       src: templates/tomcat8.j2
       dest: /etc/default/tomcat8
-     notify:
+     notify: 
       - restart tomcat
-  
+
+   - name: copy server.xml file
+     template:
+      src: templates/server.xml.j2
+      dest: /etc/tomcat8/server.xml
+
    - name: install tomcat additional packages
-     package: "{{ item }}"
-     state: present
+     package:
+      name: "{{ item }}"
+      state: present
      loop: "{{ tomcat_additional_packages }}"
- 
+
    - name: copy tomcat users file
      template:
-      src: /templates/tomcat-users.xml.j2
+      src: templates/tomcat-users.xml.j2
       dest: /etc/tomcat8/tomcat-users.xml
      notify:
       - restart tomcat
- 
+
   handlers:
-    name: restart tomcat
-    service:
-     name: tomcat8
-     state: restarted
+   - name: restart tomcat
+     service:
+      name: tomcat8
+      state: restarted
+
+
